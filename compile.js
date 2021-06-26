@@ -2,8 +2,8 @@ var path =  require('path');
 var fs = require('fs');
 var solc =  require('solc');
 
-let solFile = 'Demo.sol';
-let jsonFile = 'build/Demo.json';
+let solFile = 'Vote.sol';
+let jsonFile = 'build/Vote.json';
  
 // 获取智能合约的绝对路径
 let contractPath = path.resolve('../', 'erc20-contract/contracts', solFile);
@@ -16,7 +16,7 @@ let contractSource = fs.readFileSync(contractPath, 'utf-8');
 let jsonContractSource = JSON.stringify({
     language: 'Solidity',
     sources: {
-        'Demo.sol': {  // 指明编译的文件名
+        'Vote.sol': {  // 指明编译的文件名
         content: contractSource, // solidity 源代码
       },
     },

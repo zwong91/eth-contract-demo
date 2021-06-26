@@ -10,7 +10,7 @@ var fs = require('fs');
 var teamjson;
 let abi;
 let bytecode;
-fs.readFile('build/Demo.json', 'utf-8', (err, data)=>{
+fs.readFile('build/Vote.json', 'utf-8', (err, data)=>{
     if(err) throw err;
     teamjson = JSON.parse(data);
     abi = teamjson.abi;
@@ -22,7 +22,7 @@ var deployTeam = async(teamName)=>{
     try{
         console.log("to get the accounts");
         var accounts = await web3.eth.getAccounts(); // 获取账户
-        console.log(accounts); //0x662df9d8Da0Fe726953a04E74dcf83Fa8d25d3C1
+        //console.log(accounts); //0x662df9d8Da0Fe726953a04E74dcf83Fa8d25d3C1
         console.log(accounts[0]); //0x662df9d8Da0Fe726953a04E74dcf83Fa8d25d3C1
         console.log("To deploy team contract.");
         var result = await new web3.eth.Contract(abi).deploy(
@@ -42,5 +42,12 @@ var deployTeam = async(teamName)=>{
         console.error(error);
     }
 };
-deployTeam('teamName'); // 测试
+
+
+//deployTeam('teamName'); // 测试
+deployTeam([
+    web3.utils.asciiToHex("Alice"), 
+    web3.utils.asciiToHex("Bob"),
+    web3.utils.asciiToHex("Charlie")
+]);
 module.exports = deployTeam;

@@ -10,7 +10,7 @@ var fs = require('fs');
 var teamjson;
 let abi;
 let bytecode;
-fs.readFile('build/Demo.json', 'utf-8', (err, data)=>{
+fs.readFile('build/Vote.json', 'utf-8', (err, data)=>{
     if(err) throw err;
     teamjson = JSON.parse(data);
     abi = teamjson.abi;
@@ -18,20 +18,29 @@ fs.readFile('build/Demo.json', 'utf-8', (err, data)=>{
 
 
     //console.log(abi); 
-    //创建合约对象, 0xD5a9e637E3C403E4aAd2e3F8e6543a1007777326 为合约部署地址
-    var contractInstance = new web3.eth.Contract(abi, '0xD5a9e637E3C403E4aAd2e3F8e6543a1007777326', {
+    //创建合约对象, 0x2199D4C855122f649CBc26e17a4305Ee05424629 为合约部署地址
+    var contractInstance = new web3.eth.Contract(abi, '0x2199D4C855122f649CBc26e17a4305Ee05424629', {
         from: '0xEDb3418783c2bC922b4E1E285e76eeb237b5EEc2', // default from address
         gasPrice: '200000' // default gas price in wei, 20 gwei in this case
     });
 
     var result = contractInstance
     .methods
-    .mint('0x268ed28F8a067a0f019a292C46481cC9F78CB077', 99)
-    .call()
-    .then(result => console.log(result));
+    .winnerName()
+    .call(function(err, val) {
+        if  (err) console.log(err);
+        console.log(web3.utils.hexToAscii(val));
+        // will print "Alice"
+     });
+
+    // var result = contractInstance
+    // .methods
+    // .mint('0x268ed28F8a067a0f019a292C46481cC9F78CB077', 99)
+    // .call()
+    // .then(result => console.log(result));
 
 
-    var result = contractInstance.methods.getTeamName().call((err, val) => {
-        console.log({ err, val })
-      });
+    // var result = contractInstance.methods.getTeamName().call((err, val) => {
+    //     console.log({ err, val })
+    //   });
 });
