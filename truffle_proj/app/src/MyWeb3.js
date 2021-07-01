@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import abi from './ZombieCore.json'
+import ZombieCore from './ZombieCore.json'
 import ContractAddress from './ContractAddress'
 
 const MyWeb3 ={
@@ -21,9 +21,9 @@ const MyWeb3 ={
             ethereum.enable().then(function (accounts) {
                 //初始化provider
                 let provider = window['ethereum'] || window.web3.currentProvider
-                console.log(provider);
                 //初始化Web3
                 window.web3 = new Web3(provider)
+                console.log(window.web3);
                 //获取到当前以太坊网络id
                 window.web3.eth.net.getId().then(function (result) {
                     let currentChainId = result
@@ -33,7 +33,7 @@ const MyWeb3 ={
                     let currentContractAddress = ContractAddress[currentChainId]
                     if(currentContractAddress !== undefined){
                         //实例化合约
-                        window.MyContract = new window.web3.eth.Contract(abi.abi,currentContractAddress)
+                        window.MyContract = new window.web3.eth.Contract(ZombieCore.abi, currentContractAddress)
                         //获取到当前默认的以太坊地址
                         window.defaultAccount = accounts[0].toLowerCase()
                         //that.allEvents(window.MyContract)
